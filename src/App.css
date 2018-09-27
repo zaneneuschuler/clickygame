@@ -26,3 +26,9 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.card{
+ height: 150px;
+ display: inline-block;
+ margin-bottom: 10px;
+}
