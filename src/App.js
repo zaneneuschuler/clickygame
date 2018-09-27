@@ -8,8 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from './components/card';
 import cards from "./cards.json";
+var shuffle = require('shuffle-array');
 
 class App extends Component {
+
+  randomizeCards = () => {
+    let newCards = shuffle(this.state.cards, { 'copy': true });
+    this.setState({cards: newCards});
+  };
 
     state = {
       score: 0,
@@ -23,7 +29,7 @@ class App extends Component {
 
       this.setState({greetingMessage: "You lose! Click again to try again."});
       this.setState({beenClicked: []});
-            this.setState({score: 0});
+      this.setState({score: 0});
 
 
     }else{
@@ -31,13 +37,9 @@ class App extends Component {
       this.setState({beenClicked: [...this.state.beenClicked, id]})
       this.setState({
         score: this.state.score + 1
-      });
-      this.handleTopScore();
+      }, () => this.handleTopScore())
     }
-    // We always use the setState method to update a component's state
-    this.setState({ score: this.state.score+1 });
-    this.handleTopScore();
-    
+    this.randomizeCards();
   };
 
   handleTopScore = () => {
@@ -70,7 +72,7 @@ class App extends Component {
         </AppBar>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Click an image to raise your score! But be careful, if you click it again... you lose!</h1>
         </header>
         <br />
         <div className="container">
