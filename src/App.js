@@ -12,10 +12,8 @@ var shuffle = require('shuffle-array');
 
 class App extends Component {
 
-  randomizeCards = () => {
-    let newCards = shuffle(this.state.cards, { 'copy': true });
-    this.setState({cards: newCards});
-  };
+
+
 
     state = {
       score: 0,
@@ -27,19 +25,18 @@ class App extends Component {
   handleScore = (id) => {
     if(this.state.beenClicked.includes(id)){
 
-      this.setState({greetingMessage: "You lose! Click again to try again."});
-      this.setState({beenClicked: []});
-      this.setState({score: 0});
-
+      this.setState({greetingMessage: "You lose! Click again to try again.",
+      beenClicked: [],
+      score: 0
+    });
 
     }else{
-      this.setState({greetingMessage: "Clicky Game!"});
-      this.setState({beenClicked: [...this.state.beenClicked, id]})
-      this.setState({
-        score: this.state.score + 1
-      }, () => this.handleTopScore())
+      this.setState({greetingMessage: "Correct guess!",
+    beenClicked: [...this.state.beenClicked, id],
+    score: this.state.score + 1
+    }, () => this.handleTopScore());
     }
-    this.randomizeCards();
+    this.setState({cards: shuffle(this.state.cards)});
   };
 
   handleTopScore = () => {
@@ -61,8 +58,8 @@ class App extends Component {
           <Grid justify= "space-between"
           container 
           spacing={24}>
-            <Grid item><Typography variant="title">{this.state.greetingMessage}</Typography></Grid>
             <Grid item><Typography variant="title">Current Score: {this.state.score}</Typography></Grid>
+             <Grid item><Typography variant="title">{this.state.greetingMessage}</Typography></Grid>
             <Grid item><Typography variant="title">Top Score: {this.state.topScore}</Typography></Grid>
             </Grid>
           
